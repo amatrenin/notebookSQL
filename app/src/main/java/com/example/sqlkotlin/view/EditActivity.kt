@@ -28,15 +28,9 @@ class EditActivity : AppCompatActivity() {
         getMyIntents()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        myDbManager.closeDb()
-    }
-
     override fun onResume() {
         super.onResume()
         myDbManager.openDb()
-
 
     }
 
@@ -96,7 +90,7 @@ class EditActivity : AppCompatActivity() {
         binding.imButtonDeleteImage.visibility = View.VISIBLE
     }
 
-    fun getMyIntents() {
+    private fun getMyIntents() {
         binding.fbEdit.visibility = View.GONE
         val i = intent
 
@@ -131,6 +125,10 @@ class EditActivity : AppCompatActivity() {
         val time = Calendar.getInstance().time
         val formatter = SimpleDateFormat("dd-MM-yy hh:mm", Locale.getDefault())
         return formatter.format(time)
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        myDbManager.closeDb()
     }
 
 }

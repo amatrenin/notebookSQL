@@ -25,16 +25,10 @@ class MainActivity : AppCompatActivity() {
         initSearchView()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        myDbManager.closeDb()
-    }
-
     override fun onResume() {
         super.onResume()
         myDbManager.openDb()
         fillAdapter()
-
 
     }
 
@@ -43,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(i)
     }
 
-    fun init() {
+    private fun init() {
         binding.rcView.layoutManager = LinearLayoutManager(this)
         val swapHelper = getSwapMg()
         swapHelper.attachToRecyclerView(binding.rcView)
@@ -65,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun fillAdapter() {
+    private fun fillAdapter() {
         val list = myDbManager.readDbData("")
         myAdapter.updateAdapter(list)
         if (list.size > 0) {
@@ -90,6 +84,10 @@ class MainActivity : AppCompatActivity() {
                 myAdapter.removeItem(viewHolder.adapterPosition, myDbManager)
             }
         })
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        myDbManager.closeDb()
     }
 
 }
