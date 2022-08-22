@@ -5,6 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 class MyDbManager(context: Context) {
@@ -41,7 +43,7 @@ class MyDbManager(context: Context) {
         db?.delete(MyDbNameClass.TABLE_NAME, null, null)
     }
 
-    fun readDbData(searchText: String): ArrayList<ListItem> {
+    suspend fun readDbData(searchText: String): ArrayList<ListItem> = withContext(Dispatchers.IO){
         val dataList = ArrayList<ListItem>()
         val selection = "${MyDbNameClass.COLUMN_NAME_TITLE} like ?"
         val cursor = db?.query(
@@ -72,7 +74,7 @@ class MyDbManager(context: Context) {
         }
 
         cursor?.close()
-        return dataList
+        return@withContext dataList
     }
 
     fun closeDb() {

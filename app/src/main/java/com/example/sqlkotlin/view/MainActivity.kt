@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sqlkotlin.databinding.ActivityMainBinding
 import com.example.sqlkotlin.db.MyAdapter
 import com.example.sqlkotlin.db.MyDbManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     val myDbManager = MyDbManager(this)
     val myAdapter = MyAdapter(ArrayList(), this)
+    private var job: Job? = null
 
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         myDbManager.openDb()
-        fillAdapter()
+        fillAdapter("")
 
     }
 
@@ -52,20 +57,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
-                val list = myDbManager.readDbData(text!!)
-                myAdapter.updateAdapter(list)
+                fillAdapter(text!!)
                 return true
             }
         })
     }
 
-    private fun fillAdapter() {
-        val list = myDbManager.readDbData("")
-        myAdapter.updateAdapter(list)
-        if (list.size > 0) {
-            binding.tvNoElements.visibility = View.GONE
-        } else {
-            binding.tvNoElements.visibility = View.VISIBLE
+    private fun fillAdapter(text: String) {
+        job?.cancel()
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val list = myDbManager.readDbData(text)
+            myAdapter.updateAdapter(list)
+            if (list.size > 0) {
+                binding.tvNoElements.visibility = View.GONE
+            } else {
+                binding.tvNoElements.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -85,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
     override fun onDestroy() {
         super.onDestroy()
         myDbManager.closeDb()
