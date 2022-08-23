@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SQLkotlin">
         <activity
-            android:name=".WidgetActivity"
+            android:name=".view.WidgetActivity"
             android:exported="false" />
         <activity
             android:name=".view.EditActivity"

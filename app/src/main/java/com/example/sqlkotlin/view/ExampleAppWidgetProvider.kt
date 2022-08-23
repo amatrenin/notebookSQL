@@ -10,6 +10,7 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import com.example.sqlkotlin.R
 
+
 class ExampleAppWidgetProvider: AppWidgetProvider() {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onUpdate(
@@ -24,7 +25,7 @@ class ExampleAppWidgetProvider: AppWidgetProvider() {
             val pendingIntent: PendingIntent = PendingIntent.getActivity(
                 /* context = */ context,
                 /* requestCode = */  0,
-                /* intent = */ Intent(context, ExampleAppWidgetProvider::class.java),
+                /* intent = */ Intent(context, WidgetActivity::class.java),
                 /* flags = */ PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
@@ -40,6 +41,7 @@ class ExampleAppWidgetProvider: AppWidgetProvider() {
             // Tell the AppWidgetManager to perform an update on the current
             // widget.
             appWidgetManager.updateAppWidget(appWidgetId, views)
+
 // Check the view.
 //            views.setCompoundButtonChecked(R.id., true)
 //
