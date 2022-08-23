@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sqlkotlin.databinding.ActivityMainBinding
-import com.example.sqlkotlin.db.MyAdapter
+import com.example.sqlkotlin.view.adapters.MyAdapter
 import com.example.sqlkotlin.db.MyDbManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

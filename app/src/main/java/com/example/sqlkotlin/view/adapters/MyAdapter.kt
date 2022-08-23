@@ -1,4 +1,4 @@
-package com.example.sqlkotlin.db
+package com.example.sqlkotlin.view.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sqlkotlin.view.EditActivity
 import com.example.sqlkotlin.R
+import com.example.sqlkotlin.db.ListItem
+import com.example.sqlkotlin.db.MyDbManager
+import com.example.sqlkotlin.db.MyIntentConstants
 
 class MyAdapter(listMain: ArrayList<ListItem>, contextM: Context) :
     RecyclerView.Adapter<MyAdapter.MyHolder>() {
